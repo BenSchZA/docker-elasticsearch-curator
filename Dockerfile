@@ -13,11 +13,13 @@ RUN arch="$(dpkg --print-architecture)" \
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r curator && useradd -r -g curator curator
 
-RUN pip install elasticsearch-curator==3.4.0
+RUN pip install elasticsearch-curator==5.5.4
 
+COPY curator.yml /
+COPY curator_actions.yml /
 COPY docker-entrypoint.sh /
 
-ENV INTERVAL_IN_HOURS=12
+ENV INTERVAL_IN_MINUTES=1
 ENV OLDER_THAN_IN_DAYS="7"
 ENV ELASTICSEARCH_HOST=elasticsearch
 
